@@ -4,6 +4,11 @@ const path = require('path');
 const cookieParser = require('cookie-parser'); //if we add cookies 
 const mongoose = require("mongoose");
 const PORT = 3000;
+const session = require('express-session');
+const userController = require ('./controllers/userController.js')
+const cors = require('cors');
+
+
 
 //Allowing all IP Addresses via Atalas 
 const connectionString = 'mongodb+srv://solo:thisisdumb75@cluster0.6zuzqbm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';//will need mongoose connect function
@@ -17,7 +22,10 @@ mongoose.connect(connectionString, {
     console.error('Connection error: ', error)
 });
 
-
+// app.use(session({
+//     secret: 'thisisacoolapp'
+// }))
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -32,8 +40,12 @@ app.use('/build', express.static(path.join(__dirname, '../build')));
 //this will route any get requests back to front-end so we can use react-router
 //going to wait until we rearrange their files before committing to a file path
 app.get('*', (req, res) => {
-    return res.status(200).sendFile(path.join(__dirname, '../index.html'));
+    return res.status(200).sendFile(path.join(__dirname, '../build/index.html')); 
 });
+
+app.post('/signup', userController.createUser, (req, res) => {
+    return res.status(200).json({user: res.locals.newUser});
+})
 
 //catch all error handler
 app.use((req, res) => res.status(404).send('This page does not exist'));
@@ -51,4 +63,4 @@ app.use((err, req, res, next) => {
 });
 
 
-// app.listen(PORT, () =>  console.log(`Server is running on port ${PORT}`));
+app.listen(PORT, () =>  console.log(`Server is running on port ${PORT}`));

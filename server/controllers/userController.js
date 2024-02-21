@@ -18,7 +18,7 @@ userController.createUser = async (req, res, next) => {
     try {
         const user = await User.create({ username, password });
         res.locals.username = user.username
-        res.status(200).json({ message: 'successful signup'});
+       // res.status(200).json({ message: 'successful signup'});//sent it back in server.js instead of here, not sure it makes a diff
         return next();
     }
     catch (err){
@@ -28,4 +28,6 @@ userController.createUser = async (req, res, next) => {
             message: { err: 'An error occurred.' },
         });
     }
-}
+};
+
+module.exports = userController;

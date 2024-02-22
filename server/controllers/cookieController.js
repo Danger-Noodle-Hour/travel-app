@@ -1,21 +1,13 @@
 const User = require ('../models/userModel'); //double check pathing
 const cookieController = {};
 
-cookiesController.setCookie = (req, res, next) => {
-<<<<<<< HEAD
-
-=======
+cookieController.setCookie = (req, res, next) => {
 res.cookie()
->>>>>>> 5e545d546c311c1be0d7b6bb7153048d84ef200b
 };
 
 
 
-cookiesController.setSSIDCookie = (req, res, next) => {
-<<<<<<< HEAD
-
-};
-=======
+cookieController.setSSIDCookie = (req, res, next) => {
 res.cookie('ssid', res.locals.user._id,{
     maxAge: 50000,
     httpOnly: true,
@@ -26,6 +18,5 @@ next();
 }
 
 ;
->>>>>>> 5e545d546c311c1be0d7b6bb7153048d84ef200b
 
 module.exports = cookieController;

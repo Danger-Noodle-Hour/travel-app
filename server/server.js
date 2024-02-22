@@ -31,6 +31,7 @@ app.use(session({
         mongoUrl: connectionString,
         collection: 'mySessionCollection'}),//using connect-mongo as a session store instead of MemoryStore
     cookie:{
+        expires: 60000,
         sameSite: 'strict', //same site enforcement, not sure if we need it
     }
 }));

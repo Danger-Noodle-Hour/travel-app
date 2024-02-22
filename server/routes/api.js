@@ -6,12 +6,6 @@ const cookieParser = require('cookie-parser');
 const userController = require('../controllers/userController');
 const cookieController = require('../controllers/cookieController');
 const sessionController = require('../controllers/sessionController');
-<<<<<<< HEAD
-
-const router = express.Router();
-
-router.get('/')
-=======
 const apiController = require('../controllers/apiController');
 
 const router = express.Router();
@@ -49,4 +43,3 @@ router.get('/map', sessionController.isLoggedIn, (req, res) => {
 });
 
 
->>>>>>> 5e545d546c311c1be0d7b6bb7153048d84ef200b

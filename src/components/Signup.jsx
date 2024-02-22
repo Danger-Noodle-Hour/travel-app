@@ -23,14 +23,14 @@ const Signup = () => {
   //   navigate('/map');
   // };
   //signup routing to backend to be saved in mongoDB
-  const handleSignup = async ({username, password}) => { 
+  const handleSignup = async ({username, password, city}) => { 
 
     const response = await fetch ('/signup', {
       method: 'POST',
       headers:{
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({username, password}),
+      body: JSON.stringify({username, password, city}),
     });
 
     const data = await response.json();

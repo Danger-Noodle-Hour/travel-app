@@ -6,7 +6,7 @@ const SALT_WORK_FACTOR = 10;
 const userSchema = new Schema({
     username: {type: String, required: true, unique: true},
     password: {type: String, required: true, minlength: 6},
-    // homecity: {type: String, required: true}
+    city: {type: String, required: true},
 })
 
 //pre-hook to hash password

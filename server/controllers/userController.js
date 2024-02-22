@@ -5,42 +5,24 @@ const userController = {};
 
 userController.createUser = async (req, res, next) => {
     //destructure user and pass first
-    const { username, password } = req.body;
-<<<<<<< HEAD
-
-    //edge case: if user or pass not passed in
-    if (!username || !password)
-    return next({
-        log: 'Missing username or password in userController.createUser',
-        status: 400,
-        message: { err: 'An error occurred' },
-    });
-=======
+    const { username, password, city } = req.body;
     console.log('user: ', req.body.username, 'password: ', req.body.password)
 
     //edge case: if user or pass not passed in
-    if (!username || !password)
+    if (!username || !password || !city)
         return next({
             log: 'Missing username or password in userController.createUser',
             status: 400,
             message: { err: 'Username and password are required.' },
         });
->>>>>>> 5e545d546c311c1be0d7b6bb7153048d84ef200b
 
     try {
-        const user = await User.create({ username, password });
+        const user = await User.create({ username, password, city });
         res.locals.username = user.username
-<<<<<<< HEAD
-       // res.status(200).json({ message: 'successful signup'});//sent it back in server.js instead of here, not sure it makes a diff
-        return next();
-    }
-    catch (err){
-=======
        // res.status(200).json({ message: 'successful signup' });//sent it back in server.js instead of here, not sure it makes a diff
         return next();
     }
     catch (err) {
->>>>>>> 5e545d546c311c1be0d7b6bb7153048d84ef200b
         return next({
             log: `an error occurred in userController.createUser: ${err}`,
             status: 500,
@@ -49,8 +31,6 @@ userController.createUser = async (req, res, next) => {
     }
 };
 
-<<<<<<< HEAD
-=======
 userController.verifyUser = async (req, res, next) => {
      const { username, password } = req.body;
 
@@ -100,5 +80,4 @@ userController.verifyUser = async (req, res, next) => {
     }
 };
 
->>>>>>> 5e545d546c311c1be0d7b6bb7153048d84ef200b
 module.exports = userController;

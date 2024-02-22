@@ -3,14 +3,16 @@ const app = express();
 const path = require('path');
 const cookieParser = require('cookie-parser'); //if we add cookies 
 const mongoose = require("mongoose");
+const MongoStore = require('connect-mongo'); //used to interface with express-session
 const PORT = 3000;
-const session = require('express-session');
-const userController = require ('./controllers/userController.js')
+const session = require('express-session');//will create a session for us
+const sessionController = require('./controllers/sessionController.js');
+const userController = require ('./controllers/userController.js');
 const cors = require('cors');
 
 
 
-//Allowing all IP Addresses via Atalas 
+//Allowing all IP Addresses via Atalas, need to change settings in Atlas for this to happen
 const connectionString = 'mongodb+srv://solo:thisisdumb75@cluster0.6zuzqbm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';//will need mongoose connect function
 
 mongoose.connect(connectionString, {
@@ -22,9 +24,16 @@ mongoose.connect(connectionString, {
     console.error('Connection error: ', error)
 });
 
-// app.use(session({
-//     secret: 'thisisacoolapp'
-// }))
+// define session here via express-session. cookie-parser no longer needed 
+app.use(session({
+    secret: 'thisisacoolapp', //used to create hash to sign session ID cookie. required
+    store: MongoStore.create({
+        mongoUrl: connectionString,
+        collection: 'mySessionCollection'}),//using connect-mongo as a session store instead of MemoryStore
+    cookie:{
+        sameSite: 'strict', //same site enforcement, not sure if we need it
+    }
+}));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

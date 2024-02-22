@@ -12,6 +12,9 @@ const theme = {
            text: '#0081B8',
            card: '#0A99FF',
        },
+       cityOption: { // used as highlight color for city option dropdown
+        bg: '#f0f0f0',
+      },
    },
    sizes: {
        xl: {

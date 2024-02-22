@@ -1,3 +1,17 @@
-.DS_Store
+# Node.js dependencies
 node_modules/
-build/
+
+# Compiled output
+/build
+/dist
+
+# IDE/Editor files
+.idea/
+.vscode/
+
+# Environment variables
+.env
+
+# Miscellaneous
+.DS_Store
+*.log

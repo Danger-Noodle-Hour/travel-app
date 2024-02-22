@@ -3,11 +3,11 @@ const app = express();
 const path = require('path');
 const cookieParser = require('cookie-parser'); //if we add cookies 
 const mongoose = require("mongoose");
+const apiRouter = require('./routes/api.js');
 const MongoStore = require('connect-mongo'); //used to interface with express-session
 const PORT = 3000;
-const session = require('express-session');//will create a session for us
-const sessionController = require('./controllers/sessionController.js');
-const userController = require ('./controllers/userController.js');
+const session = require('express-session');
+const userController = require ('./controllers/userController.js')
 const cors = require('cors');
 
 
@@ -16,7 +16,7 @@ const cors = require('cors');
 const connectionString = 'mongodb+srv://solo:thisisdumb75@cluster0.6zuzqbm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';//will need mongoose connect function
 
 mongoose.connect(connectionString, {
-    useNewUrlParser: true,
+    useNewUrlParser: true, //heads up: terminal says useNewUrlParser and useUnifiedTopology are deprecated and have no effect
     useUnifiedTopology: true,
 }).then(() => {
     console.log('Connected to MongoDB');
@@ -34,7 +34,7 @@ app.use(session({
         sameSite: 'strict', //same site enforcement, not sure if we need it
     }
 }));
-app.use(cors());
+app.use(cors());app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -42,9 +42,12 @@ app.use(express.urlencoded({ extended: true }));
 //static files
 app.use('/build', express.static(path.join(__dirname, '../build')));
 
-//not sure if we want to separate out server vs. router file so I will
-//leave this here for potential future use:
-// app.use('/', apiRouter);
+app.use('/map/api', (req, res, next) => {
+    console.log('Request received for /map:', req.method, req.url);
+    next();
+}, apiRouter);
+
+app.use('/', console.log('going to api file'), apiRouter);
 
 //this will route any get requests back to front-end so we can use react-router
 //going to wait until we rearrange their files before committing to a file path

@@ -64,6 +64,23 @@ app.post('/signup', userController.createUser, (req, res) => {
     return res.status(200).json({user: res.locals.newUser});
 })
 
+// Logout route
+app.post('/logout', (req, res) => {
+    // Destroy the session
+    req.session.destroy((err) => {
+      // Check for errors
+      if (err) {
+        console.error('Error destroying session:', err);
+        // Send an error response if session destruction fails
+        return res.status(500).json({ error: 'Failed to logout' });
+      }
+      // If session destruction is successful, send a success response
+      return res.status(200).json({ message: 'Logout successful' });
+    });
+  });
+  
+
+
 //catch all error handler
 app.use('*', (req, res) => res.status(404).send('This page does not exist'));
 

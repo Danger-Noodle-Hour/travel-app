@@ -129,10 +129,7 @@ const Map = () => {
         }
     }
   }
-    // Sends user back to login page
-  const handleLogout = () => {
-    navigate("/");
-  };
+
 
   const labelPositionsArray = [];
 
@@ -258,16 +255,6 @@ const Map = () => {
           </Popover>
         )}
       </div>
-      <Button
-        borderRadius="9px"
-        type="submit"
-        variant="solid"
-        marginBottom="15px"
-        colorScheme="brand"
-        onClick={handleLogout}
-      >
-        Logout
-      </Button>
     </div>
   );
 };

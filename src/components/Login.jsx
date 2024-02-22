@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import LoginForm from './LoginForm';
+import LoginForm from './LoginForm'; // Import the LoginForm component
 
 import {
   Flex,
@@ -14,19 +14,24 @@ import {
 const Login = () => {
   const navigate = useNavigate();
 
+  // Function to handle navigation to the signup page
   const handleSignup = () => {
-    navigate('/signup');
+    navigate('/signup'); // Navigate to the signup page when clicked
   };
 
   return (
+    // Flex container to center the content vertically and horizontally
     <Flex flexDirection="column" width="100wh" height="100vh" backgroundColor="gray.200" justifyContent="center" alignItems="center">
       <Stack flexDir="column" mb="2" justifyContent="center" alignItems="center">
+        {/* Logo and heading */}
         <Avatar src="../assets/images/img.png" size="2xl" />
         <Heading color="brand.text">USA Travel Map</Heading>
+        {/* Render the LoginForm component */}
         <Box minW={{ base: "90%", md: "468px" }} >
           <LoginForm />
         </Box>
       </Stack>
+      {/* Link to navigate to the signup page */}
       <Box mt={4}>
         New to us?{' '}
         <Link color="brand.bg" onClick={handleSignup}>

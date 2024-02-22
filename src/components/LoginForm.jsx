@@ -18,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 
+// Create chakra components for the font awesome icons
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
 
@@ -27,13 +28,16 @@ const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
+  // Function to handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevState => ({ ...prevState, [name]: value }));
   };
 
+  // Function to toggle password visibility
   const handleShowClick = () => setShowPassword(!showPassword);
 
+  // Function to handle login form submission
   const handleLogin = (e) => {
     e.preventDefault();
     const { username, password } = formData;
@@ -43,12 +47,13 @@ const LoginForm = () => {
     }
     const storedUser = JSON.parse(localStorage.getItem('user'));
     if (storedUser && storedUser.username === username && storedUser.password === password) {
-      navigate('/map');
+      navigate('/map'); // Redirect to the map page if login is successful
     } else {
-      navigate('/signup');
+      navigate('/signup'); // Redirect to the signup page if login fails
     }
   };
 
+  // Function to handle signup navigation
   const handleSignup = () => {
     navigate('/signup');
   };

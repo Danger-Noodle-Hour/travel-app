@@ -47,12 +47,13 @@ userController.verifyUser = async (req, res, next) => {
         // console.log('user: ', user)
 
         // store username into res.locals object
-        res.locals.username = username;
+        // res.locals.username = username;
 
         // check authentication
         if (!user) {
-            console.log('user not found OR password does not match');
-            res.redirect('/signup');
+            return res.status(401).json({
+                error: 'Invalid username or password',
+            });
         } else {
             // testing
             // console.log('password: ', password);
@@ -61,11 +62,15 @@ userController.verifyUser = async (req, res, next) => {
             //check that password matches in db
             const result = await bcrypt.compare(password, user.password);
 
-            console.log('result: ', result)
+            if(!result) {
+                return res.status(401).json({
+                    error: 'Invalid username or password'
+                });
+            }
             // if password doesn't match, redirect client to /signup page
-            if (!result) return res.redirect('/signup');
+            // if (!result) return res.redirect('/signup');//redirect happening on frontend
             else {
-                res.locals.id = user.id;
+                res.locals.id = user.id;// is it _id?
                 return next();
             }
         }

@@ -22,7 +22,8 @@ router.post('/signup', userController.createUser, (req, res) => {
 });
 
 router.post('/login', userController.verifyUser, (req, res) => {
-    return res.status(200).json({ redirect: './map' })
+    console.log('You have logged in!')
+    return res.status(200).json({user: res.locals.id});
 });
 
 

@@ -1,16 +1,18 @@
-import React from 'react';
+// Import useState hook
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Flex,
   Heading,
-  Avatar,
   Box,
   Link,
 } from "@chakra-ui/react";
 import SignupForm from './SignupForm'; // Import the SignupForm component
+import Logo from './Logo';
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState(''); // State to store error message
 
   // Function to handle signup form submission
   const handleSignup = async ({ username, password, city }) => {
@@ -31,12 +33,13 @@ const Signup = () => {
       if (response.ok) {
         navigate('/map');
       } else {
-        // If there's an error response, log the error message to the console
-        console.error(data.error);
+        // If there's an error response, set the error message
+        setErrorMessage(data.message); // Assuming the backend returns the error message in a 'message' field
       }
     } catch (error) {
       // Handle any errors that occur during the fetch request
       console.error('Error:', error);
+      setErrorMessage('An error occurred during signup.');
     }
   };
 
@@ -50,12 +53,12 @@ const Signup = () => {
     <Flex flexDirection="column" width="100wh" height="100vh" backgroundColor="gray.200" justifyContent="center" alignItems="center">
       {/* Logo and heading */}
       <Box>
-        <Avatar src="../assets/images/img.png" size="2xl" />
-        <Heading color="brand.text">USA Travel Map</Heading>
+        <Logo />
+        <Heading color="brand.text">TravelLite</Heading>
       </Box>
       {/* Render the SignupForm component */}
       <Box minW={{ base: "90%", md: "468px" }} >
-        <SignupForm onSubmit={handleSignup} /> {/* Pass the handleSignup function as a prop */}
+        <SignupForm onSubmit={handleSignup} errorMessage={errorMessage} /> {/* Pass the handleSignup function and errorMessage as props */}
       </Box>
       {/* Link to navigate to the login page */}
       <Box>

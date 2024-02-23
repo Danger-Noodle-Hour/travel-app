@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginForm from './LoginForm'; // Import the LoginForm component
+import Logo from './Logo'; // Import the Logo component
 
 import {
   Flex,
@@ -24,8 +25,8 @@ const Login = () => {
     <Flex flexDirection="column" width="100wh" height="100vh" backgroundColor="gray.200" justifyContent="center" alignItems="center">
       <Stack flexDir="column" mb="2" justifyContent="center" alignItems="center">
         {/* Logo and heading */}
-        <Avatar src="../assets/images/img.png" size="2xl" />
-        <Heading color="brand.text">USA Travel Map</Heading>
+        <Logo />
+        <Heading color="brand.text">TraveLite</Heading>
         {/* Render the LoginForm component */}
         <Box minW={{ base: "90%", md: "468px" }} >
           <LoginForm />

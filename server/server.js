@@ -3,7 +3,6 @@ const app = express();
 const path = require('path');
 const mongoose = require("mongoose");
 const userRouter = require('./routes/loginSystem.js');
-const fetchRouter = require('./routes/fetch.js')
 const MongoStore = require('connect-mongo'); //used to interface with express-session
 const PORT = 3000;
 const session = require('express-session');
@@ -44,13 +43,6 @@ app.use(express.urlencoded({ extended: true }));
 //static files
 app.use('/build', express.static(path.join(__dirname, '../build')));
 
-
-// app.use('/map/api/:stateName', (req, res, next) => {
-//     console.log('Request received for /map:', req.params);
-//     const {stateName} = req.params;
-//     req.stateName = stateName;
-//     return next();
-// }, fetchRouter);
 
 //any requests will head to loginSystem first to see if it matches any of those requests
 app.use('/', userRouter);

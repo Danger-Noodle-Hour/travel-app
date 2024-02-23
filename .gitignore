@@ -2,7 +2,7 @@
 node_modules/
 
 # Compiled output
-/build
+
 /dist
 
 # IDE/Editor files

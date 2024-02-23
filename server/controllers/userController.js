@@ -3,30 +3,29 @@ const bcrypt = require('bcryptjs');
 
 const userController = {};
 
-userController.createUser = async (req, res, next) => {
-    //destructure user and pass first
-    const { username, password, city } = req.body;
-    // console.log('user: ', req.body.username, 'password: ', req.body.password)
 
-    //edge case: if user or pass not passed in
-    if (!username || !password || !city)
-        return next({
-            log: 'Missing username or password in userController.createUser',
-            status: 400,
-            message: { err: 'Username and password are required.' },
-        });
+userController.createUser = async (req, res, next) => {
+    // Destructure username, password, and city from request body
+    const { username, password, city } = req.body;
 
     try {
+        // Check if the username already exists in the database
+        const existingUser = await User.findOne({ username });
+        if (existingUser) {
+            // If the username is already taken, return an error response
+            return res.status(400).json({ message: 'Username is already taken. Please choose a different one.' });
+        }
+
+        // If the username is not taken, create a new user
         const user = await User.create({ username, password, city });
-        res.locals.username = user.username
-       // res.status(200).json({ message: 'successful signup' });//sent it back in server.js instead of here, not sure it makes a diff
+        res.locals.username = user.username;
         return next();
-    }
-    catch (err) {
+    } catch (error) {
+        // Handle any errors that occur during user creation
         return next({
-            log: `an error occurred in userController.createUser: ${err}`,
+            log: `An error occurred in userController.createUser: ${error}`,
             status: 500,
-            message: { err: 'An error occurred.' },
+            message: { error: 'An error occurred.' },
         });
     }
 };

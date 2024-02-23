@@ -1,0 +1,10 @@
+.nav-link {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease; /* Add transition for smooth color change */
+  }
+  
+  .nav-link:hover {
+    color: blue; /* Change the text color to blue on hover */
+  }
+  

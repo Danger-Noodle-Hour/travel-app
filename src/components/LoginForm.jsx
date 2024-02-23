@@ -36,20 +36,40 @@ const LoginForm = () => {
 
   // Function to toggle password visibility
   const handleShowClick = () => setShowPassword(!showPassword);
-
-  // Function to handle login form submission
-  const handleLogin = (e) => {
+  
+//handles click of submit and calls handleLogin
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const { username, password } = formData;
-    if (!username || !password) {
-      setErrorMessage('Username and password are required');
-      return;
-    }
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (storedUser && storedUser.username === username && storedUser.password === password) {
-      navigate('/map'); // Redirect to the map page if login is successful
-    } else {
-      navigate('/signup'); // Redirect to the signup page if login fails
+    handleLogin();
+  };
+  
+  const { username, password } = formData;
+  const handleLogin = async () => {
+    try {
+      // Send a POST request to the backend endpoint '/login'
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }), // Convert data to JSON format and send it in the request body
+      });
+
+      // Parse the response data as JSON
+      const data = await response.json();
+
+      // If the response is successful (status code 2xx), navigate to the map page
+      if (response.ok) {
+        navigate('/map');
+      } else {
+        // If there's an error response, log the error message to the console
+        // console.error(data.error);
+        navigate('/signup');
+      }
+    } catch (error) {
+      // Handle any errors that occur during the fetch request
+      console.error('Error:', error);
+      navigate('/signup');
     }
   };
 
@@ -60,7 +80,7 @@ const LoginForm = () => {
 
   return (
     <FormControl> {/* Wrap the entire form in FormControl */}
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleSubmit}>
         <Stack spacing={4} p="1rem" backgroundColor="whiteAlpha.900" boxShadow="md" minH="200px" borderRadius="10px">
           <InputGroup>
             <InputLeftElement pointerEvents="none" children={<CFaUserAlt color="gray.300" />}/>

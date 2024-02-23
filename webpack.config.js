@@ -13,20 +13,19 @@ module.exports = {
   devtool: 'source-map',
   devServer: {
     static: {
-          directory: path.resolve(__dirname, './src'), 
-        },
-        port: 8080,
-        open: true,
-        hot: true,
-        compress: true,
-        historyApiFallback: true,
-        proxy: {
-            context: ['/**'],
-            // context: ['/signup', '/map',], //you could also do '/**' but this will lead to serving static assets 
-            target: 'http://localhost:3000/',
-            secure: false,
-          },
-      },
+      directory: path.resolve(__dirname, './src'), 
+    },
+    port: 8080,
+    open: true,
+    hot: true,
+    compress: true,
+    historyApiFallback: true,
+    proxy: {
+      context: ['/**'],
+      target: 'http://localhost:3000/',
+      secure: false,
+    },
+  },
   module: {
     rules: [
       {
@@ -47,9 +46,13 @@ module.exports = {
         },
       },
       {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        test: /\.(png|svg|jpg|jpeg|gif|webp)$/i,
         type: 'asset/resource',
-      }
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
     ],
   },
   plugins: [
